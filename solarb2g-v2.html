@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SolarB2G — Mockup v2</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ─── TOKENS ─────────────────────────────────────────────── */
+:root {
+  --cream:   #FFFBF4;
+  --cream2:  #F5F0E8;
+  --cream3:  #EDE6D8;
+  --terra:   #C94B0A;
+  --terra2:  #E05510;
+  --terra-l: #F9E8DF;
+  --green:   #1B5E3B;
+  --green2:  #237A4D;
+  --green-l: #DFF0E8;
+  --amber:   #C9851A;
+  --amber-l: #FEF3DC;
+  --ink:     #1A1814;
+  --ink2:    #3A352E;
+  --ink3:    #7A6F62;
+  --border:  #DDD5C8;
+  --white:   #FFFFFF;
+  --shadow:  0 2px 12px rgba(26,24,20,0.07);
+  --shadow-l:0 1px 4px rgba(26,24,20,0.05);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--cream); color:var(--ink); }
+
+/* ─── GLOBAL NAV ─────────────────────────────────────────── */
+.nav {
+  position:fixed; top:0; left:0; right:0; z-index:999;
+  background:var(--white); border-bottom:1.5px solid var(--border);
+  display:flex; align-items:center; gap:6px; padding:10px 28px;
+}
+.nav-logo {
+  font-family:'Playfair Display',serif; font-weight:900;
+  font-size:17px; color:var(--ink); margin-right:18px; letter-spacing:-.5px;
+}
+.nav-logo em { font-style:normal; color:var(--terra); }
+.nav-btn {
+  background:transparent; border:1.5px solid var(--border);
+  color:var(--ink3); padding:5px 15px; border-radius:6px;
+  font-family:'Plus Jakarta Sans',sans-serif; font-size:12px; font-weight:600;
+  cursor:pointer; transition:all .18s; white-space:nowrap;
+}
+.nav-btn:hover { border-color:var(--terra); color:var(--terra); }
+.nav-btn.active {
+  background:var(--terra); border-color:var(--terra);
+  color:var(--white); box-shadow:0 2px 8px rgba(201,75,10,.25);
+}
+
+/* ─── SCREENS ────────────────────────────────────────────── */
+.screen { display:none; padding-top:52px; min-height:100vh; }
+.screen.active { display:block; }
+
+/* ════════════════════════════════════════════════════════════
+   SCREEN 1 — PROPOSTA COMERCIAL
+════════════════════════════════════════════════════════════ */
+.p-hero {
+  display:grid; grid-template-columns:1fr 1fr;
+  min-height:calc(100vh - 52px); background:var(--cream);
+}
+.p-hero-left {
+  padding:72px 64px; display:flex; flex-direction:column;
+  justify-content:center; gap:32px; border-right:1.5px solid var(--border);
+}
+.p-tag {
+  display:inline-flex; align-items:center; gap:8px;
+  background:var(--terra-l); color:var(--terra); border:1.5px solid rgba(201,75,10,.2);
+  padding:5px 14px; border-radius:30px; font-size:11px; font-weight:700;
+  letter-spacing:1.5px; text-transform:uppercase; width:fit-content;
+}
+.p-tag::before {
+  content:''; width:7px; height:7px; background:var(--terra);
+  border-radius:50%; animation:blink 2s infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.4} }
+.p-hero-left h1 {
+  font-family:'Playfair Display',serif; font-size:clamp(44px,4.5vw,70px);
+  font-weight:900; line-height:.92; letter-spacing:-2.5px; color:var(--ink);
+}
+.p-hero-left h1 em {
+  font-style:italic; color:var(--terra);
+  background:linear-gradient(100deg,var(--terra),var(--amber));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+}
+.p-desc { font-size:17px; color:var(--ink3); line-height:1.7; max-width:440px; font-weight:400; }
+.p-ctas { display:flex; gap:12px; flex-wrap:wrap; }
+.btn-fill {
+  background:var(--terra); color:var(--white); border:none;
+  padding:14px 28px; border-radius:8px; font-family:'Plus Jakarta Sans',sans-serif;
+  font-weight:700; font-size:14px; cursor:pointer; transition:all .18s;
+  box-shadow:0 3px 12px rgba(201,75,10,.3);
+}
+.btn-fill:hover { background:var(--terra2); transform:translateY(-2px); box-shadow:0 6px 20px rgba(201,75,10,.35); }
+.btn-out {
+  background:transparent; color:var(--ink2); border:1.5px solid var(--border);
+  padding:14px 28px; border-radius:8px; font-family:'Plus Jakarta Sans',sans-serif;
+  font-weight:600; font-size:14px; cursor:pointer; transition:all .18s;
+}
+.btn-out:hover { border-color:var(--ink2); }
+
+/* hero right – big number board */
+.p-hero-right {
+  padding:72px 64px; display:flex; flex-direction:column;
+  justify-content:center; gap:24px; background:var(--ink);
+  position:relative; overflow:hidden;
+}
+.p-hero-right::before {
+  content:'';
+  position:absolute; inset:0;
+  background:
+    radial-gradient(ellipse 70% 60% at 30% 20%, rgba(201,75,10,.18) 0%,transparent 60%),
+    radial-gradient(ellipse 50% 50% at 90% 80%, rgba(27,94,59,.2) 0%,transparent 55%);
+}
+.p-sunlines {
+  position:absolute; bottom:-40px; right:-40px;
+  width:300px; height:300px; opacity:.05;
+}
+.p-label {
+  font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase;
+  color:rgba(255,255,255,.35); margin-bottom:6px;
+}
+.p-bignum {
+  font-family:'Playfair Display',serif; font-size:clamp(52px,6vw,82px);
+  font-weight:900; line-height:.9; letter-spacing:-3px; color:var(--white);
+}
+.p-bignum.terra { color:var(--terra2); }
+.p-bignum.green { color:#4CD98A; }
+.p-row { border-bottom:1px solid rgba(255,255,255,.07); padding-bottom:22px; margin-bottom:2px; position:relative; z-index:1; }
+.p-row:last-child { border:none; }
+.p-subdesc { font-size:14px; color:rgba(255,255,255,.4); margin-top:4px; }
+
+/* strips */
+.strip {
+  display:grid; grid-template-columns:repeat(4,1fr);
+  border-top:1.5px solid var(--border);
+}
+.strip-item {
+  padding:28px 32px; border-right:1.5px solid var(--border);
+  display:flex; align-items:flex-start; gap:14px;
+}
+.strip-item:last-child { border:none; }
+.strip-icon {
+  width:38px; height:38px; border-radius:9px;
+  display:flex; align-items:center; justify-content:center; font-size:18px;
+  flex-shrink:0;
+}
+.strip-icon.t { background:var(--terra-l); }
+.strip-icon.g { background:var(--green-l); }
+.strip-icon.a { background:var(--amber-l); }
+.strip-icon.i { background:var(--cream3); }
+.strip-text h5 { font-size:13px; font-weight:700; color:var(--ink2); margin-bottom:3px; }
+.strip-text p { font-size:12px; color:var(--ink3); line-height:1.5; }
+
+/* ROI section */
+.roi-section {
+  padding:80px 64px; display:grid; grid-template-columns:1fr 1fr;
+  gap:64px; align-items:center; background:var(--cream2);
+  border-top:1.5px solid var(--border);
+}
+.roi-text .eyebrow {
+  font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase;
+  color:var(--terra); margin-bottom:14px;
+}
+.roi-text h2 {
+  font-family:'Playfair Display',serif; font-size:clamp(34px,3vw,52px);
+  font-weight:900; line-height:1.05; letter-spacing:-2px; color:var(--ink);
+  margin-bottom:20px;
+}
+.roi-text p { font-size:16px; color:var(--ink3); line-height:1.7; max-width:420px; }
+.roi-visual {
+  display:flex; flex-direction:column; gap:16px;
+}
+.roi-row {
+  display:flex; align-items:center; gap:16px;
+  background:var(--white); border-radius:12px; padding:20px 24px;
+  border:1.5px solid var(--border); box-shadow:var(--shadow-l);
+}
+.roi-row.highlighted {
+  background:var(--green); border-color:var(--green);
+  box-shadow:0 4px 20px rgba(27,94,59,.25);
+}
+.roi-row-icon { font-size:24px; }
+.roi-row-text .top { font-size:12px; color:var(--ink3); font-weight:500; }
+.roi-row.highlighted .roi-row-text .top { color:rgba(255,255,255,.6); }
+.roi-row-text .val {
+  font-family:'Playfair Display',serif; font-size:26px; font-weight:700;
+  letter-spacing:-1px; color:var(--ink);
+}
+.roi-row.highlighted .roi-row-text .val { color:var(--white); }
+.roi-arrow { margin-left:auto; font-size:20px; color:var(--border); }
+.roi-row.highlighted .roi-arrow { color:rgba(255,255,255,.3); }
+
+/* ════════════════════════════════════════════════════════════
+   SCREEN 2 — DASHBOARD
+════════════════════════════════════════════════════════════ */
+.db-shell {
+  display:grid; grid-template-columns:240px 1fr;
+  min-height:calc(100vh - 52px);
+}
+.db-sidebar {
+  background:var(--white); border-right:1.5px solid var(--border);
+  padding:24px 0; position:sticky; top:52px; height:calc(100vh - 52px); overflow-y:auto;
+}
+.db-muni {
+  padding:0 16px 20px; border-bottom:1.5px solid var(--border); margin-bottom:16px;
+}
+.db-muni-inner {
+  background:var(--cream2); border-radius:10px; padding:12px 14px;
+  border:1.5px solid var(--border);
+}
+.db-muni-name { font-size:13px; font-weight:700; color:var(--ink2); }
+.db-muni-sub { font-size:11px; color:var(--ink3); margin-top:2px; }
+.db-muni-dot { display:inline-block; width:7px; height:7px; background:#22c55e; border-radius:50%; margin-right:6px; animation:blink 2s infinite; }
+.db-nav-section { padding:0 12px; margin-bottom:24px; }
+.db-nav-label {
+  font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase;
+  color:var(--ink3); padding:0 8px; margin-bottom:6px;
+}
+.db-nav-item {
+  display:flex; align-items:center; gap:10px; padding:9px 10px;
+  border-radius:8px; font-size:13px; font-weight:500; color:var(--ink3);
+  cursor:pointer; transition:all .15s; margin-bottom:1px;
+}
+.db-nav-item:hover { background:var(--cream2); color:var(--ink2); }
+.db-nav-item.active {
+  background:var(--terra-l); color:var(--terra);
+  font-weight:700; border:1px solid rgba(201,75,10,.15);
+}
+.db-nav-icon { font-size:15px; width:18px; text-align:center; }
+.db-badge {
+  margin-left:auto; background:var(--terra); color:var(--white);
+  font-size:9px; font-weight:700; padding:2px 6px; border-radius:8px;
+}
+
+.db-main { padding:32px; background:var(--cream); }
+.db-header { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:28px; }
+.db-header h2 {
+  font-family:'Playfair Display',serif; font-size:26px; font-weight:700;
+  letter-spacing:-1px; color:var(--ink);
+}
+.db-header p { font-size:13px; color:var(--ink3); margin-top:3px; }
+.db-period {
+  display:flex; gap:6px; align-items:center;
+  background:var(--white); border:1.5px solid var(--border);
+  padding:8px 14px; border-radius:8px; font-size:12px; font-weight:600; color:var(--ink3);
+}
+
+/* KPI grid */
+.kpi-row { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:20px; }
+.kpi {
+  background:var(--white); border-radius:12px; padding:20px;
+  border:1.5px solid var(--border); box-shadow:var(--shadow-l);
+  position:relative; overflow:hidden;
+}
+.kpi.dark {
+  background:var(--ink); border-color:var(--ink);
+}
+.kpi::after {
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  background:var(--border);
+}
+.kpi.t::after { background:linear-gradient(90deg,var(--terra),var(--amber)); }
+.kpi.g::after { background:linear-gradient(90deg,var(--green),#4CD98A); }
+.kpi.a::after { background:var(--amber); }
+.kpi.dark::after { background:linear-gradient(90deg,var(--terra2),var(--amber)); }
+.kpi-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
+.kpi-icon2 { font-size:18px; }
+.kpi-pill {
+  font-size:10px; font-weight:700; padding:3px 7px; border-radius:5px;
+}
+.kpi-pill.up { background:rgba(27,94,59,.1); color:var(--green); }
+.kpi-pill.dn { background:rgba(201,75,10,.1); color:var(--terra); }
+.kpi-val {
+  font-family:'Playfair Display',serif; font-size:28px; font-weight:700;
+  letter-spacing:-1.5px; color:var(--ink); line-height:1;
+}
+.kpi.dark .kpi-val { color:var(--white); }
+.kpi-lbl { font-size:12px; color:var(--ink3); margin-top:4px; font-weight:500; }
+.kpi.dark .kpi-lbl { color:rgba(255,255,255,.45); }
+
+/* Charts */
+.charts-grid { display:grid; grid-template-columns:3fr 2fr; gap:14px; margin-bottom:20px; }
+.card {
+  background:var(--white); border-radius:12px; padding:22px;
+  border:1.5px solid var(--border); box-shadow:var(--shadow-l);
+}
+.card-head { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:20px; }
+.card-title { font-size:14px; font-weight:700; color:var(--ink2); }
+.card-sub { font-size:11px; color:var(--ink3); margin-top:2px; }
+.card-tabs2 { display:flex; gap:2px; }
+.tab2 {
+  padding:4px 10px; border-radius:5px; font-size:11px; font-weight:600;
+  cursor:pointer; color:var(--ink3); transition:.15s;
+}
+.tab2.on { background:var(--cream2); color:var(--ink); }
+
+/* Stacked bar */
+.sbar-chart { height:160px; display:flex; align-items:flex-end; gap:10px; }
+.sbar-col { flex:1; display:flex; flex-direction:column; align-items:center; gap:6px; height:100%; justify-content:flex-end; }
+.sbar-bars { display:flex; flex-direction:column; align-items:center; width:100%; gap:2px; }
+.sbar-seg { width:100%; border-radius:3px; transition:.3s; }
+.sbar-seg:hover { filter:brightness(1.1); }
+.sbar-lbl { font-size:9px; color:var(--ink3); }
+
+/* Savings summary */
+.savings-nums { display:flex; flex-direction:column; gap:12px; }
+.saving-item {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:14px 16px; background:var(--cream2); border-radius:9px;
+}
+.saving-label { font-size:12px; color:var(--ink3); font-weight:500; }
+.saving-val {
+  font-family:'Playfair Display',serif; font-size:20px;
+  font-weight:700; letter-spacing:-1px;
+}
+.saving-val.r { color:var(--terra); }
+.saving-val.g { color:var(--green); }
+.saving-val.a { color:var(--amber); }
+
+/* Table */
+.db-table-card {
+  background:var(--white); border-radius:12px;
+  border:1.5px solid var(--border); overflow:hidden;
+}
+.db-table-head {
+  padding:16px 20px; border-bottom:1.5px solid var(--border);
+  display:flex; justify-content:space-between; align-items:center;
+}
+.db-table-title { font-size:14px; font-weight:700; color:var(--ink2); }
+.btn-mini {
+  background:var(--ink); color:var(--white); border:none;
+  padding:6px 14px; border-radius:6px; font-size:11px; font-weight:700;
+  font-family:'Plus Jakarta Sans',sans-serif; cursor:pointer;
+}
+.dt { width:100%; border-collapse:collapse; }
+.dt th {
+  text-align:left; padding:10px 20px; font-size:10px; font-weight:700;
+  letter-spacing:1.5px; text-transform:uppercase; color:var(--ink3);
+  background:var(--cream); border-bottom:1.5px solid var(--border);
+}
+.dt td { padding:13px 20px; font-size:13px; border-bottom:1.5px solid var(--cream2); }
+.dt tr:last-child td { border:none; }
+.dt tr:hover td { background:var(--cream); }
+.badge {
+  display:inline-flex; align-items:center; gap:5px;
+  padding:3px 9px; border-radius:15px; font-size:10px; font-weight:700;
+}
+.badge.on { background:var(--green-l); color:var(--green); }
+.badge.study { background:var(--amber-l); color:var(--amber); }
+.badge.plan { background:var(--cream3); color:var(--ink3); }
+.bdot { width:5px; height:5px; border-radius:50%; background:currentColor; }
+
+/* ════════════════════════════════════════════════════════════
+   SCREEN 3 — SIMULADOR DE ECONOMIA
+════════════════════════════════════════════════════════════ */
+.sim-wrap { display:grid; grid-template-columns:1fr 1fr; min-height:calc(100vh - 52px); }
+.sim-left {
+  background:var(--cream2); padding:60px 56px;
+  border-right:1.5px solid var(--border);
+  display:flex; flex-direction:column; justify-content:center;
+}
+.sim-left .eyebrow {
+  font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase;
+  color:var(--green2); margin-bottom:16px;
+}
+.sim-left h2 {
+  font-family:'Playfair Display',serif; font-size:42px; font-weight:900;
+  letter-spacing:-2px; color:var(--ink); line-height:1.05; margin-bottom:12px;
+}
+.sim-left p { font-size:15px; color:var(--ink3); line-height:1.7; margin-bottom:40px; max-width:400px; }
+
+.form-group { margin-bottom:24px; }
+.form-label { font-size:12px; font-weight:700; color:var(--ink2); margin-bottom:8px; display:block; letter-spacing:.3px; }
+.form-input {
+  width:100%; padding:13px 16px;
+  background:var(--white); border:1.5px solid var(--border);
+  border-radius:9px; font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:14px; color:var(--ink); outline:none; transition:.15s;
+}
+.form-input:focus { border-color:var(--terra); box-shadow:0 0 0 3px rgba(201,75,10,.1); }
+.form-select {
+  appearance:none; cursor:pointer;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237A6F62' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat; background-position:right 14px center;
+}
+.form-hint { font-size:11px; color:var(--ink3); margin-top:6px; }
+
+.slider-wrap { position:relative; }
+.range-slider {
+  width:100%; height:6px; background:var(--cream3); border-radius:3px;
+  appearance:none; outline:none; cursor:pointer;
+  background:linear-gradient(90deg,var(--terra) 0%,var(--terra) 60%,var(--cream3) 60%);
+}
+.range-slider::-webkit-slider-thumb {
+  appearance:none; width:22px; height:22px;
+  background:var(--white); border:3px solid var(--terra);
+  border-radius:50%; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,.15);
+}
+.range-labels { display:flex; justify-content:space-between; font-size:11px; color:var(--ink3); margin-top:8px; }
+
+.sim-right {
+  background:var(--green); padding:60px 56px;
+  display:flex; flex-direction:column; justify-content:center; gap:28px;
+  position:relative; overflow:hidden;
+}
+.sim-right::before {
+  content:'';
+  position:absolute; inset:0;
+  background:radial-gradient(ellipse 80% 60% at 20% 80%, rgba(255,255,255,.06) 0%,transparent 50%);
+}
+.sim-result-label {
+  font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase;
+  color:rgba(255,255,255,.5); position:relative; z-index:1;
+}
+.sim-result-val {
+  font-family:'Playfair Display',serif; line-height:.9; letter-spacing:-3px;
+  color:var(--white); font-weight:900; position:relative; z-index:1;
+}
+.sim-result-val.xl { font-size:72px; }
+.sim-result-val.lg { font-size:48px; }
+.sim-result-sub { font-size:14px; color:rgba(255,255,255,.55); margin-top:6px; position:relative; z-index:1; }
+.sim-divider { border:none; border-top:1px solid rgba(255,255,255,.12); position:relative; z-index:1; }
+
+.sim-metrics-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; position:relative; z-index:1; }
+.sim-metric {
+  background:rgba(255,255,255,.1); backdrop-filter:blur(4px);
+  border-radius:10px; padding:16px; border:1px solid rgba(255,255,255,.12);
+}
+.sim-metric-val {
+  font-family:'Playfair Display',serif; font-size:28px; font-weight:700;
+  letter-spacing:-1px; color:var(--white);
+}
+.sim-metric-label { font-size:11px; color:rgba(255,255,255,.5); margin-top:3px; }
+
+.btn-sim {
+  background:var(--white); color:var(--green); border:none;
+  padding:16px 32px; border-radius:9px; font-family:'Plus Jakarta Sans',sans-serif;
+  font-weight:800; font-size:15px; cursor:pointer; position:relative; z-index:1;
+  transition:.18s; box-shadow:0 4px 16px rgba(0,0,0,.15);
+}
+.btn-sim:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(0,0,0,.2); }
+
+/* ════════════════════════════════════════════════════════════
+   SCREEN 4 — MONITORAMENTO LIVE
+════════════════════════════════════════════════════════════ */
+.mon-shell { background:#120D05; min-height:calc(100vh - 52px); }
+.mon-top {
+  padding:18px 32px; border-bottom:1px solid rgba(255,255,255,.06);
+  display:flex; align-items:center; justify-content:space-between;
+  background:rgba(0,0,0,.3);
+}
+.mon-top-logo {
+  font-family:'Playfair Display',serif; font-size:18px; font-weight:700;
+  color:var(--white); display:flex; align-items:center; gap:12px;
+}
+.mon-sun {
+  width:34px; height:34px; border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,#FFD97D,#F4660D);
+  box-shadow:0 0 0 6px rgba(244,102,13,.15), 0 0 30px rgba(244,102,13,.4);
+  animation:sunpulse 4s ease-in-out infinite;
+}
+@keyframes sunpulse {
+  0%,100%{box-shadow:0 0 0 6px rgba(244,102,13,.15),0 0 30px rgba(244,102,13,.4)}
+  50%{box-shadow:0 0 0 12px rgba(244,102,13,.08),0 0 50px rgba(244,102,13,.55)}
+}
+.mon-live {
+  display:flex; align-items:center; gap:8px;
+  background:rgba(34,197,94,.12); border:1px solid rgba(34,197,94,.25);
+  color:#4ADE80; padding:6px 14px; border-radius:20px;
+  font-size:11px; font-weight:700; letter-spacing:1.5px;
+}
+.mon-live-dot { width:7px; height:7px; background:#4ADE80; border-radius:50%; animation:blink 1.5s infinite; }
+.mon-time2 { font-size:13px; color:rgba(255,255,255,.35); font-family:'Plus Jakarta Sans',sans-serif; }
+
+.mon-grid { display:grid; grid-template-columns:1.2fr 1.8fr 1fr; gap:1px; background:rgba(255,255,255,.05); margin:1px; }
+.mon-col { display:flex; flex-direction:column; gap:1px; }
+.mon-c { background:#120D05; padding:26px; }
+
+/* Power hero */
+.pwr-hero-val {
+  font-family:'Playfair Display',serif; font-size:70px; font-weight:900;
+  line-height:.9; letter-spacing:-4px;
+  background:linear-gradient(135deg,#FFD97D,var(--terra2));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  text-shadow:none; filter:drop-shadow(0 0 30px rgba(244,102,13,.4));
+}
+.pwr-unit { font-size:20px; color:rgba(255,255,255,.4); margin-left:4px; font-weight:300; font-family:'Plus Jakarta Sans',sans-serif; }
+.pwr-sub { font-size:13px; color:rgba(255,255,255,.35); margin-top:8px; }
+.pwr-peak {
+  display:inline-flex; align-items:center; gap:6px;
+  background:rgba(244,102,13,.15); border:1px solid rgba(244,102,13,.25);
+  color:#FFA47A; padding:5px 12px; border-radius:6px; font-size:12px; font-weight:600;
+  margin-top:12px;
+}
+
+.mon-mini-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:16px; }
+.mon-mini {
+  background:rgba(255,255,255,.04); border-radius:9px; padding:14px;
+  border:1px solid rgba(255,255,255,.06);
+}
+.mon-mini-val {
+  font-family:'Playfair Display',serif; font-size:20px; font-weight:700;
+  letter-spacing:-.5px; color:var(--white);
+}
+.mon-mini-val.t { color:#FFA47A; }
+.mon-mini-val.g { color:#4ADE80; }
+.mon-mini-lbl { font-size:10px; color:rgba(255,255,255,.35); margin-top:2px; }
+
+/* SVG chart */
+.svg-chart-wrap { overflow:hidden; }
+.svg-chart-wrap svg { width:100%; height:130px; }
+.mon-c-label {
+  font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase;
+  color:rgba(244,102,13,.7); margin-bottom:14px;
+}
+
+/* Gauge */
+.gauge-center { display:flex; flex-direction:column; align-items:center; padding:10px 0; }
+.gauge-center svg { width:140px; height:90px; }
+.gauge-val {
+  font-family:'Playfair Display',serif; font-size:32px; font-weight:700;
+  color:var(--white); text-align:center; margin-top:4px;
+}
+.gauge-sub { font-size:11px; color:rgba(255,255,255,.35); text-align:center; }
+
+/* Buildings live */
+.bld-row {
+  display:flex; align-items:center; gap:10px;
+  padding:11px 0; border-bottom:1px solid rgba(255,255,255,.05);
+}
+.bld-row:last-child { border:none; }
+.bld-icon2 {
+  width:32px; height:32px; border-radius:7px;
+  background:rgba(255,255,255,.06); display:flex; align-items:center;
+  justify-content:center; font-size:14px; flex-shrink:0;
+}
+.bld-name2 { flex:1; font-size:13px; color:rgba(255,255,255,.8); font-weight:500; }
+.bld-kw {
+  font-family:'Playfair Display',serif; font-size:15px; font-weight:700;
+  color:#FFA47A;
+}
+.bld-dot2 { width:7px; height:7px; border-radius:50%; }
+.bld-dot2.on { background:#4ADE80; box-shadow:0 0 7px #4ADE80; }
+.bld-dot2.off { background:#F87171; }
+
+/* Alert */
+.mon-alert {
+  background:rgba(248,113,113,.08); border:1px solid rgba(248,113,113,.2);
+  border-radius:9px; padding:12px;
+}
+.mon-alert-title { font-size:10px; font-weight:700; color:#F87171; letter-spacing:1px; text-transform:uppercase; margin-bottom:4px; }
+.mon-alert-body { font-size:11px; color:rgba(255,255,255,.5); line-height:1.5; }
+
+/* CO2 panel */
+.co2-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:1px; }
+.co2-item {
+  background:rgba(255,255,255,.04); padding:24px;
+  text-align:center; border:1px solid rgba(255,255,255,.04);
+}
+.co2-emoji { font-size:28px; margin-bottom:8px; }
+.co2-val {
+  font-family:'Playfair Display',serif; font-size:32px; font-weight:700;
+  letter-spacing:-1.5px; color:var(--white); line-height:1;
+}
+.co2-val.t { color:#FFA47A; }
+.co2-val.g { color:#4ADE80; }
+.co2-lbl { font-size:11px; color:rgba(255,255,255,.35); margin-top:6px; }
+
+/* Responsive helpers */
+@media (max-width:900px) {
+  .p-hero { grid-template-columns:1fr; }
+  .p-hero-right { display:none; }
+  .db-shell { grid-template-columns:1fr; }
+  .db-sidebar { display:none; }
+  .db-main { padding:20px; }
+  .sim-wrap { grid-template-columns:1fr; }
+  .sim-right { min-height:400px; }
+  .mon-grid { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── NAV ────────────────────────────────────────────── -->
+<nav class="nav">
+  <div class="nav-logo">Solar<em>B2G</em></div>
+  <button class="nav-btn active"  onclick="show(0)">🏛️ Proposta Comercial</button>
+  <button class="nav-btn"         onclick="show(1)">📊 Dashboard</button>
+  <button class="nav-btn"         onclick="show(2)">💡 Simulador de Economia</button>
+  <button class="nav-btn"         onclick="show(3)">⚡ Monitoramento Live</button>
+</nav>
+
+<!-- ════════════════════════════════════════════════════
+     SCREEN 1 – PROPOSTA COMERCIAL
+════════════════════════════════════════════════════ -->
+<div class="screen active" id="s0">
+
+  <div class="p-hero">
+    <!-- left -->
+    <div class="p-hero-left">
+      <div class="p-tag">PL 1.566/2024 Aprovado · Primavera do Leste</div>
+
+      <h1>Energia<br><em>solar</em><br>para a sua<br>prefeitura.</h1>
+
+      <p class="p-desc">
+        Reduzimos o custo de energia dos prédios públicos em até 90% — sem investimento inicial. Estudo de viabilidade gratuito, proposta pronta para licitação.
+      </p>
+
+      <div class="p-ctas">
+        <button class="btn-fill">📄 Ver Estudo Gratuito</button>
+        <button class="btn-out">Agendar Reunião →</button>
+      </div>
+    </div>
+
+    <!-- right – big number board -->
+    <div class="p-hero-right">
+      <svg class="p-sunlines" viewBox="0 0 300 300" fill="none">
+        <circle cx="150" cy="150" r="60" stroke="white" stroke-width="1"/>
+        <circle cx="150" cy="150" r="100" stroke="white" stroke-width="1" stroke-dasharray="6 10"/>
+        <circle cx="150" cy="150" r="140" stroke="white" stroke-width="1" stroke-dasharray="3 14"/>
+        <line x1="150" y1="0"   x2="150" y2="90"  stroke="white" stroke-width="1"/>
+        <line x1="150" y1="210" x2="150" y2="300" stroke="white" stroke-width="1"/>
+        <line x1="0"   y1="150" x2="90"  y2="150" stroke="white" stroke-width="1"/>
+        <line x1="210" y1="150" x2="300" y2="150" stroke="white" stroke-width="1"/>
+        <line x1="40"  y1="40"  x2="105" y2="105" stroke="white" stroke-width="1"/>
+        <line x1="195" y1="195" x2="260" y2="260" stroke="white" stroke-width="1"/>
+        <line x1="260" y1="40"  x2="195" y2="105" stroke="white" stroke-width="1"/>
+        <line x1="40"  y1="260" x2="105" y2="195" stroke="white" stroke-width="1"/>
+      </svg>
+
+      <div class="p-row">
+        <div class="p-label">Conta atual (Energisa)</div>
+        <div class="p-bignum terra">R$ 500k</div>
+        <div class="p-subdesc">por mês — sem geração própria</div>
+      </div>
+      <div class="p-row">
+        <div class="p-label">Com SolarB2G</div>
+        <div class="p-bignum">R$ 50k</div>
+        <div class="p-subdesc">por mês — 90% de redução</div>
+      </div>
+      <div class="p-row">
+        <div class="p-label">Economia anual projetada</div>
+        <div class="p-bignum green">R$ 5,4M</div>
+        <div class="p-subdesc">payback em 4 anos · vida útil 25 anos</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- feature strip -->
+  <div class="strip">
+    <div class="strip-item">
+      <div class="strip-icon t">🔍</div>
+      <div class="strip-text">
+        <h5>Diagnóstico Gratuito</h5>
+        <p>Levantamento completo dos prédios e simulação sem custo.</p>
+      </div>
+    </div>
+    <div class="strip-item">
+      <div class="strip-icon g">⚡</div>
+      <div class="strip-text">
+        <h5>Instalação Completa</h5>
+        <p>Engenharia, instalação e comissionamento com equipe própria.</p>
+      </div>
+    </div>
+    <div class="strip-item">
+      <div class="strip-icon a">📡</div>
+      <div class="strip-text">
+        <h5>Monitoramento 24/7</h5>
+        <p>Dashboard em tempo real com alertas automáticos.</p>
+      </div>
+    </div>
+    <div class="strip-item">
+      <div class="strip-icon i">📋</div>
+      <div class="strip-text">
+        <h5>Pronto para Licitação</h5>
+        <p>Proposta técnica formatada para processo licitatório.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROI section -->
+  <div class="roi-section">
+    <div class="roi-text">
+      <div class="eyebrow">Retorno Financeiro</div>
+      <h2>De despesa a<br>investimento.</h2>
+      <p>O projeto se paga em 4,2 anos e gera economia por mais 20 anos após o payback. Cada real investido retorna seis vezes.</p>
+    </div>
+    <div class="roi-visual">
+      <div class="roi-row">
+        <div class="roi-row-icon">📉</div>
+        <div class="roi-row-text">
+          <div class="top">Custo atual / mês</div>
+          <div class="val" style="color:var(--terra)">R$ 500.000</div>
+        </div>
+        <div class="roi-arrow">→</div>
+      </div>
+      <div class="roi-row">
+        <div class="roi-row-icon">🔧</div>
+        <div class="roi-row-text">
+          <div class="top">Investimento total</div>
+          <div class="val">R$ 2.100.000</div>
+        </div>
+        <div class="roi-arrow">→</div>
+      </div>
+      <div class="roi-row">
+        <div class="roi-row-icon">📅</div>
+        <div class="roi-row-text">
+          <div class="top">Payback</div>
+          <div class="val">4,2 anos</div>
+        </div>
+        <div class="roi-arrow">→</div>
+      </div>
+      <div class="roi-row highlighted">
+        <div class="roi-row-icon">💚</div>
+        <div class="roi-row-text">
+          <div class="top">Economia total (25 anos)</div>
+          <div class="val">R$ 112.500.000</div>
+        </div>
+        <div class="roi-arrow">★</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════════════════════════
+     SCREEN 2 – DASHBOARD
+════════════════════════════════════════════════════ -->
+<div class="screen" id="s1">
+  <div class="db-shell">
+
+    <!-- sidebar -->
+    <div class="db-sidebar">
+      <div class="db-muni">
+        <div class="db-muni-inner">
+          <div class="db-muni-name"><span class="db-muni-dot"></span>Primavera do Leste</div>
+          <div class="db-muni-sub">Mato Grosso · MT</div>
+        </div>
+      </div>
+
+      <div class="db-nav-section">
+        <div class="db-nav-label">Principal</div>
+        <div class="db-nav-item active"><span class="db-nav-icon">📊</span>Painel Geral</div>
+        <div class="db-nav-item"><span class="db-nav-icon">⚡</span>Geração Solar<span class="db-badge">LIVE</span></div>
+        <div class="db-nav-item"><span class="db-nav-icon">🏛️</span>Prédios</div>
+        <div class="db-nav-item"><span class="db-nav-icon">💰</span>Economia</div>
+      </div>
+      <div class="db-nav-section">
+        <div class="db-nav-label">Gestão</div>
+        <div class="db-nav-item"><span class="db-nav-icon">📋</span>Projetos<span class="db-badge">3</span></div>
+        <div class="db-nav-item"><span class="db-nav-icon">📄</span>Relatórios</div>
+        <div class="db-nav-item"><span class="db-nav-icon">🔔</span>Alertas</div>
+        <div class="db-nav-item"><span class="db-nav-icon">⚙️</span>Configurações</div>
+      </div>
+    </div>
+
+    <!-- main area -->
+    <div class="db-main">
+      <div class="db-header">
+        <div>
+          <h2>Painel Energético</h2>
+          <p>Prefeitura de Primavera do Leste · Exercício 2025</p>
+        </div>
+        <div class="db-period">📅 &nbsp;Fevereiro 2025</div>
+      </div>
+
+      <!-- KPIs -->
+      <div class="kpi-row">
+        <div class="kpi dark">
+          <div class="kpi-head"><div class="kpi-icon2">☀️</div><div class="kpi-pill up">↑ 12%</div></div>
+          <div class="kpi-val">142 kW</div>
+          <div class="kpi-lbl">Geração agora</div>
+        </div>
+        <div class="kpi g">
+          <div class="kpi-head"><div class="kpi-icon2">💚</div><div class="kpi-pill up">↑ R$23k</div></div>
+          <div class="kpi-val">R$ 49k</div>
+          <div class="kpi-lbl">Economia este mês</div>
+        </div>
+        <div class="kpi t">
+          <div class="kpi-head"><div class="kpi-icon2">⚡</div><div class="kpi-pill up">↑ 8%</div></div>
+          <div class="kpi-val">87%</div>
+          <div class="kpi-lbl">Taxa de autoconsumo</div>
+        </div>
+        <div class="kpi a">
+          <div class="kpi-head"><div class="kpi-icon2">🌿</div><div class="kpi-pill up">↑ 5%</div></div>
+          <div class="kpi-val">42 t</div>
+          <div class="kpi-lbl">CO₂ evitado no mês</div>
+        </div>
+      </div>
+
+      <!-- Charts -->
+      <div class="charts-grid">
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <div class="card-title">Custo de Energia — Antes × Depois</div>
+              <div class="card-sub">Comparativo mensal após instalação</div>
+            </div>
+            <div class="card-tabs2">
+              <div class="tab2 on">6M</div>
+              <div class="tab2">12M</div>
+              <div class="tab2">Tudo</div>
+            </div>
+          </div>
+          <div class="sbar-chart" id="sbChart"></div>
+          <div style="display:flex;gap:18px;margin-top:10px">
+            <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--ink3)"><div style="width:10px;height:10px;background:var(--terra-l);border:1.5px solid var(--terra);border-radius:2px"></div>Antes</div>
+            <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--ink3)"><div style="width:10px;height:10px;background:var(--green);border-radius:2px"></div>Depois</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <div class="card-title">Resumo do Mês</div>
+              <div class="card-sub">Fevereiro 2025</div>
+            </div>
+          </div>
+          <div class="savings-nums">
+            <div class="saving-item">
+              <div class="saving-label">Geração Total</div>
+              <div class="saving-val a">49.200 kWh</div>
+            </div>
+            <div class="saving-item">
+              <div class="saving-label">Fatura Antes</div>
+              <div class="saving-val r">R$ 500.000</div>
+            </div>
+            <div class="saving-item">
+              <div class="saving-label">Fatura Depois</div>
+              <div class="saving-val g">R$ 51.000</div>
+            </div>
+            <div class="saving-item" style="background:var(--green-l);border-radius:9px">
+              <div class="saving-label" style="font-weight:700;color:var(--green)">Economia Mês ✓</div>
+              <div class="saving-val g" style="font-size:24px">R$ 449k</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Table -->
+      <div class="db-table-card">
+        <div class="db-table-head">
+          <div class="db-table-title">🏛️ Prédios Monitorados</div>
+          <button class="btn-mini">+ Adicionar</button>
+        </div>
+        <table class="dt">
+          <thead>
+            <tr>
+              <th>Prédio</th><th>Potência</th><th>Geração Mês</th>
+              <th>Economia Mês</th><th>Performance</th><th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Prefeitura Municipal</strong></td>
+              <td>120 kWp</td><td>14.400 kWh</td>
+              <td style="font-family:'Playfair Display',serif;font-weight:700;color:var(--green)">R$ 18.720</td>
+              <td>
+                <div style="height:6px;background:var(--cream2);border-radius:3px;width:100%;overflow:hidden">
+                  <div style="height:100%;width:92%;background:var(--green);border-radius:3px"></div>
+                </div>
+              </td>
+              <td><span class="badge on"><span class="bdot"></span>Ativo</span></td>
+            </tr>
+            <tr>
+              <td><strong>Secretaria de Saúde</strong></td>
+              <td>80 kWp</td><td>9.600 kWh</td>
+              <td style="font-family:'Playfair Display',serif;font-weight:700;color:var(--green)">R$ 12.480</td>
+              <td>
+                <div style="height:6px;background:var(--cream2);border-radius:3px;width:100%;overflow:hidden">
+                  <div style="height:100%;width:88%;background:var(--green2);border-radius:3px"></div>
+                </div>
+              </td>
+              <td><span class="badge on"><span class="bdot"></span>Ativo</span></td>
+            </tr>
+            <tr>
+              <td><strong>E.E. Primavera</strong></td>
+              <td>40 kWp</td><td>4.800 kWh</td>
+              <td style="font-family:'Playfair Display',serif;font-weight:700;color:var(--green)">R$ 6.240</td>
+              <td>
+                <div style="height:6px;background:var(--cream2);border-radius:3px;width:100%;overflow:hidden">
+                  <div style="height:100%;width:85%;background:var(--amber);border-radius:3px"></div>
+                </div>
+              </td>
+              <td><span class="badge on"><span class="bdot"></span>Ativo</span></td>
+            </tr>
+            <tr>
+              <td>UBS Central</td><td>—</td><td>—</td><td>—</td><td>—</td>
+              <td><span class="badge study"><span class="bdot"></span>Em Estudo</span></td>
+            </tr>
+            <tr>
+              <td>Centro Esportivo</td><td>—</td><td>—</td><td>—</td><td>—</td>
+              <td><span class="badge plan"><span class="bdot"></span>Planejado</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════
+     SCREEN 3 – SIMULADOR
+════════════════════════════════════════════════════ -->
+<div class="screen" id="s2">
+  <div class="sim-wrap">
+
+    <!-- left: form -->
+    <div class="sim-left">
+      <div class="eyebrow">Simulador de Economia</div>
+      <h2>Quanto sua<br>prefeitura pode<br>economizar?</h2>
+      <p>Preencha os dados abaixo e veja em tempo real o impacto financeiro de instalar energia solar nos prédios públicos.</p>
+
+      <div class="form-group">
+        <label class="form-label">Município</label>
+        <select class="form-input form-select">
+          <option>Primavera do Leste – MT</option>
+          <option>Campo Verde – MT</option>
+          <option>Dom Aquino – MT</option>
+          <option>Poxoréu – MT</option>
+          <option>Rondonópolis – MT</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Gasto mensal atual com energia (R$)</label>
+        <input type="number" class="form-input" value="500000" id="gastoInput" oninput="calcSim()">
+        <div class="form-hint">Informação disponível no portal da transparência municipal</div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Número de prédios públicos: <strong id="predLabel">18</strong></label>
+        <div class="slider-wrap">
+          <input type="range" min="1" max="50" value="18" class="range-slider" id="predSlider" oninput="calcSim()">
+          <div class="range-labels"><span>1</span><span>25</span><span>50</span></div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Irradiação solar média</label>
+        <select class="form-input form-select">
+          <option>5.8 kWh/m²/dia — MT (Alto)</option>
+          <option>5.2 kWh/m²/dia — SP (Médio)</option>
+          <option>4.8 kWh/m²/dia — RS (Baixo)</option>
+        </select>
+      </div>
+
+      <button class="btn-fill" style="width:100%">Gerar Proposta Completa →</button>
+    </div>
+
+    <!-- right: results -->
+    <div class="sim-right">
+      <div>
+        <div class="sim-result-label">Economia Mensal Projetada</div>
+        <div style="display:flex;align-items:baseline;gap:8px;position:relative;z-index:1">
+          <div class="sim-result-val xl" id="simMes">R$ 449k</div>
+        </div>
+        <div class="sim-result-sub" id="simMesSub">de R$ 500.000 para ~R$ 51.000/mês</div>
+      </div>
+
+      <hr class="sim-divider">
+
+      <div>
+        <div class="sim-result-label">Economia Anual</div>
+        <div class="sim-result-val lg" id="simAno">R$ 5,4M</div>
+        <div class="sim-result-sub">ao ano — por 25 anos de vida útil</div>
+      </div>
+
+      <hr class="sim-divider">
+
+      <div class="sim-metrics-grid">
+        <div class="sim-metric">
+          <div class="sim-metric-val" id="simPayback">4,2 anos</div>
+          <div class="sim-metric-label">Payback estimado</div>
+        </div>
+        <div class="sim-metric">
+          <div class="sim-metric-val" id="simROI">538%</div>
+          <div class="sim-metric-label">ROI em 25 anos</div>
+        </div>
+        <div class="sim-metric">
+          <div class="sim-metric-val" id="simTotal">R$ 112M</div>
+          <div class="sim-metric-label">Economia total</div>
+        </div>
+        <div class="sim-metric">
+          <div class="sim-metric-val" id="simCO2">504 t</div>
+          <div class="sim-metric-label">CO₂ evitado/ano</div>
+        </div>
+      </div>
+
+      <button class="btn-sim" onclick="show(0)">📄 Ver Proposta Completa</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════
+     SCREEN 4 – MONITORAMENTO LIVE
+════════════════════════════════════════════════════ -->
+<div class="screen" id="s3">
+  <div class="mon-shell">
+
+    <div class="mon-top">
+      <div class="mon-top-logo">
+        <div class="mon-sun"></div>
+        SolarB2G · Monitor
+      </div>
+      <div class="mon-live"><div class="mon-live-dot"></div>AO VIVO</div>
+      <div class="mon-time2">⏱ 14:32:07 · 25 fev 2025</div>
+    </div>
+
+    <!-- 3-col grid -->
+    <div class="mon-grid">
+
+      <!-- col 1 -->
+      <div class="mon-col">
+        <!-- Power now -->
+        <div class="mon-c">
+          <div class="mon-c-label">Geração Instantânea</div>
+          <div style="display:flex;align-items:baseline">
+            <div class="pwr-hero-val">142</div>
+            <div class="pwr-unit">kW</div>
+          </div>
+          <div class="pwr-sub">Sistema operando normalmente</div>
+          <div class="pwr-peak">⚡ Pico hoje: 168 kW — 12h14</div>
+          <div class="mon-mini-grid">
+            <div class="mon-mini"><div class="mon-mini-val t">1.840</div><div class="mon-mini-lbl">kWh hoje</div></div>
+            <div class="mon-mini"><div class="mon-mini-val g">R$ 2.392</div><div class="mon-mini-lbl">Economia hoje</div></div>
+          </div>
+        </div>
+
+        <!-- Gauge -->
+        <div class="mon-c">
+          <div class="mon-c-label">Performance Ratio</div>
+          <div class="gauge-center">
+            <svg viewBox="0 0 140 90">
+              <path d="M 18 85 A 62 62 0 0 1 122 85" fill="none" stroke="rgba(255,255,255,.07)" stroke-width="10" stroke-linecap="round"/>
+              <path d="M 18 85 A 62 62 0 0 1 122 85" fill="none" stroke="url(#g1)" stroke-width="10" stroke-linecap="round" stroke-dasharray="196" stroke-dashoffset="49"/>
+              <defs>
+                <linearGradient id="g1" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#4ADE80"/>
+                  <stop offset="100%" stop-color="#FFA47A"/>
+                </linearGradient>
+              </defs>
+              <text x="70" y="72" text-anchor="middle" font-family="Playfair Display" font-size="24" font-weight="700" fill="white">87%</text>
+            </svg>
+            <div class="gauge-sub">Acima da meta (≥82%)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- col 2 (wide) -->
+      <div class="mon-col">
+        <!-- Line chart -->
+        <div class="mon-c">
+          <div class="mon-c-label">Curva de Geração — Hoje</div>
+          <div class="svg-chart-wrap">
+            <svg viewBox="0 0 500 130" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#F4660D" stop-opacity=".25"/>
+                  <stop offset="100%" stop-color="#F4660D" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <line x1="0" y1="30" x2="500" y2="30" stroke="rgba(255,255,255,.04)" stroke-width="1"/>
+              <line x1="0" y1="65" x2="500" y2="65" stroke="rgba(255,255,255,.04)" stroke-width="1"/>
+              <line x1="0" y1="100" x2="500" y2="100" stroke="rgba(255,255,255,.04)" stroke-width="1"/>
+              <!-- area -->
+              <path d="M0,130 L0,122 C40,118 60,112 90,98 C120,84 145,58 170,32 C195,10 215,5 240,8 C265,11 285,18 315,26 C345,34 365,70 390,92 C415,114 450,122 480,126 L500,130 Z" fill="url(#areaGrad)"/>
+              <!-- line -->
+              <path d="M0,122 C40,118 60,112 90,98 C120,84 145,58 170,32 C195,10 215,5 240,8 C265,11 285,18 315,26 C345,34 365,70 390,92 C415,114 450,122 480,126" fill="none" stroke="#F4660D" stroke-width="2" stroke-linecap="round"/>
+              <!-- current dot -->
+              <circle cx="390" cy="92" r="5" fill="#F4660D"/>
+              <circle cx="390" cy="92" r="11" fill="#F4660D" fill-opacity=".2"/>
+              <!-- hour labels -->
+              <text x="2"   y="128" font-family="Plus Jakarta Sans" font-size="9" fill="rgba(255,255,255,.25)">06h</text>
+              <text x="120" y="128" font-family="Plus Jakarta Sans" font-size="9" fill="rgba(255,255,255,.25)">09h</text>
+              <text x="240" y="128" font-family="Plus Jakarta Sans" font-size="9" fill="rgba(255,255,255,.25)">12h</text>
+              <text x="360" y="128" font-family="Plus Jakarta Sans" font-size="9" fill="rgba(255,255,255,.25)">15h</text>
+              <text x="468" y="128" font-family="Plus Jakarta Sans" font-size="9" fill="rgba(255,255,255,.25)">18h</text>
+            </svg>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:12px">
+            <div class="mon-mini"><div class="mon-mini-val" style="font-size:18px">49.200</div><div class="mon-mini-lbl">kWh este mês</div></div>
+            <div class="mon-mini"><div class="mon-mini-val t" style="font-size:18px">R$ 63.960</div><div class="mon-mini-lbl">Economia acum.</div></div>
+            <div class="mon-mini"><div class="mon-mini-val g" style="font-size:18px">42 t</div><div class="mon-mini-lbl">CO₂ evitado</div></div>
+          </div>
+        </div>
+
+        <!-- CO2 impact -->
+        <div class="mon-c">
+          <div class="mon-c-label">Impacto Ambiental Acumulado (2025)</div>
+          <div class="co2-grid">
+            <div class="co2-item">
+              <div class="co2-emoji">🌳</div>
+              <div class="co2-val g">428</div>
+              <div class="co2-lbl">Árvores equiv.</div>
+            </div>
+            <div class="co2-item">
+              <div class="co2-emoji">💨</div>
+              <div class="co2-val t">504 t</div>
+              <div class="co2-lbl">CO₂ evitado</div>
+            </div>
+            <div class="co2-item">
+              <div class="co2-emoji">⚡</div>
+              <div class="co2-val">590k</div>
+              <div class="co2-lbl">kWh gerados</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- col 3 -->
+      <div class="mon-col">
+        <!-- buildings -->
+        <div class="mon-c">
+          <div class="mon-c-label">Prédios Conectados</div>
+          <div class="bld-row"><div class="bld-icon2">🏛️</div><div class="bld-name2">Prefeitura Municipal</div><div class="bld-kw">68kW</div><div class="bld-dot2 on"></div></div>
+          <div class="bld-row"><div class="bld-icon2">🏥</div><div class="bld-name2">Sec. de Saúde</div><div class="bld-kw">44kW</div><div class="bld-dot2 on"></div></div>
+          <div class="bld-row"><div class="bld-icon2">🏫</div><div class="bld-name2">E.E. Primavera</div><div class="bld-kw">22kW</div><div class="bld-dot2 on"></div></div>
+          <div class="bld-row"><div class="bld-icon2">🏫</div><div class="bld-name2">E.M. São Paulo</div><div class="bld-kw">8kW</div><div class="bld-dot2 on"></div></div>
+          <div class="bld-row"><div class="bld-icon2">🏥</div><div class="bld-name2">UBS Vila Esp.</div><div class="bld-kw">0kW</div><div class="bld-dot2 off"></div></div>
+
+          <div style="margin-top:14px" class="mon-alert">
+            <div class="mon-alert-title">⚠ Alerta Ativo</div>
+            <div class="mon-alert-body">UBS Vila Esperança offline há 2h. Verificar inversor unidade 2.</div>
+          </div>
+        </div>
+
+        <!-- monthly saving counter -->
+        <div class="mon-c">
+          <div class="mon-c-label">Contador de Economia</div>
+          <div style="text-align:center;padding:20px 0">
+            <div style="font-size:11px;color:rgba(255,255,255,.35);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">Economizado hoje</div>
+            <div style="font-family:'Playfair Display',serif;font-size:44px;font-weight:700;color:#4ADE80;letter-spacing:-2px;line-height:1" id="counter">R$ 2.392</div>
+            <div style="font-size:11px;color:rgba(255,255,255,.3);margin-top:6px">atualizado em tempo real</div>
+            <div style="width:100%;height:4px;background:rgba(255,255,255,.06);border-radius:2px;margin-top:16px;overflow:hidden">
+              <div style="height:100%;width:62%;background:linear-gradient(90deg,#4ADE80,#F4660D);border-radius:2px;animation:fillbar 2s ease-in-out infinite alternate"></div>
+            </div>
+            <div style="font-size:10px;color:rgba(255,255,255,.25);margin-top:6px">62% da meta diária</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+@keyframes fillbar { from{width:58%} to{width:65%} }
+</style>
+
+<script>
+/* ── Screen switching ── */
+function show(i) {
+  document.querySelectorAll('.screen').forEach((s,j)=>s.classList.toggle('active',i===j));
+  document.querySelectorAll('.nav-btn').forEach((b,j)=>b.classList.toggle('active',i===j));
+}
+
+/* ── Stacked bar chart ── */
+const months=['Set','Out','Nov','Dez','Jan','Fev'];
+const before=[500,500,500,500,500,500];
+const after =[500,480,220, 90, 60, 51];
+const maxH=140;
+const bc=document.getElementById('sbChart');
+if(bc){
+  months.forEach((m,i)=>{
+    const bh=Math.round(before[i]/500*maxH);
+    const ah=Math.round(after[i]/500*maxH);
+    bc.innerHTML+=`
+      <div class="sbar-col">
+        <div class="sbar-bars">
+          <div class="sbar-seg" style="height:${bh}px;background:${i<3?'var(--terra-l)':'var(--cream3)'};border:1.5px solid ${i<3?'var(--terra)':'var(--cream3)'}"></div>
+          <div class="sbar-seg" style="height:${ah}px;background:var(--green);opacity:${i<2?0.3:1}"></div>
+        </div>
+        <div class="sbar-lbl">${m}</div>
+      </div>`;
+  });
+}
+
+/* ── Simulator calc ── */
+function calcSim(){
+  const gasto=parseFloat(document.getElementById('gastoInput').value)||500000;
+  const pred=parseInt(document.getElementById('predSlider').value)||18;
+  document.getElementById('predLabel').textContent=pred;
+
+  const depois=gasto*0.1;
+  const economiaM=gasto-depois;
+  const economiaA=economiaM*12;
+  const invest=pred*120000;
+  const payback=invest/economiaA;
+  const total25=economiaA*25-invest;
+  const roi=((total25/invest)*100).toFixed(0);
+  const co2=Math.round(economiaA/1300);
+
+  const fmt=n=>{
+    if(n>=1e6) return 'R$ '+(n/1e6).toFixed(1)+'M';
+    if(n>=1000) return 'R$ '+(n/1000).toFixed(0)+'k';
+    return 'R$ '+n.toFixed(0);
+  };
+
+  document.getElementById('simMes').textContent=fmt(economiaM);
+  document.getElementById('simMesSub').textContent=`de ${fmt(gasto)} para ~${fmt(depois)}/mês`;
+  document.getElementById('simAno').textContent=fmt(economiaA);
+  document.getElementById('simPayback').textContent=payback.toFixed(1)+' anos';
+  document.getElementById('simROI').textContent=roi+'%';
+  document.getElementById('simTotal').textContent=fmt(total25);
+  document.getElementById('simCO2').textContent=co2+' t';
+}
+
+/* ── Live counter tick ── */
+let base=2392;
+setInterval(()=>{
+  base+=Math.round(Math.random()*4+1);
+  const el=document.getElementById('counter');
+  if(el) el.textContent='R$ '+base.toLocaleString('pt-BR');
+},3000);
+</script>
+</body>
+</html>
